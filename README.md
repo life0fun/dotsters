@@ -26,15 +26,17 @@ To compile:
 Rich gave a talk of core.async at InfoQ SF 2013. Following are some philosophies and patterns based on my understanding.
 
 
-### Function Calls Make Poor Machine.
+### Function Call Chains Make Poor Machine.
 
 Function call chains are tight coupling. You can not split function calls across web workers. In distributed system, we use rabbitmq or alike to scale up. Here we use CSP style channel to connect in process components.
 
-### Event callback force bad intimacy, and is Inverse Of Control. 
+### Event callback force pain intimacy, and is Inverse Of Control. 
 
-Event callback is messy because your logic is scattered around inside different event handlers. It is IOC because you have no control when your event handler got called.
+Event callback cause logic fragmentation because your logic is scattered around inside different event handlers. 
+It is IOC because you have no control when your event handler got called.
 
-Event callback forces intimacy due to tight coupling. Though promise helps lessen the problem. Callback still hard to reason about and is IOC.
+Event callback forces pain intimacy due to tight coupling. There are composition problems with event callbacks. 
+Though promise and futures lessen the problem. Callback still hard to reason about and is IOC.
 
 ### Friends don't let friends put logic in event handler.
 
@@ -45,9 +47,11 @@ After storing event into output channel, event handler returns the output channe
 
 ### Data Based Communication 
 
-With channel, you basic communication is not calling anymore, it is data now !!! 
+With channel, you basic communication is not calling anymore, it is data !!! 
 
-We can split the chain and distribute the work across webworkers. Think about it, with today's event callback, you can not even call across webworkers. With channel, you connect components through data, which is easy to distribute the work, and easy to reason about.
+We can split the chain and distribute the work across webworkers. Think about it, with today's function call chain, you can not split your call chains across webworkers.
+With channel, you connect components through data and you can distribute your work across webworkers. 
+Data based communication is easy to distribute, scale, and reason about.
 
 
 
