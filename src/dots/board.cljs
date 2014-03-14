@@ -157,7 +157,6 @@
 ;called as ((partial dot-index board-offset) point)
 (defn dot-index 
   [offset {:keys [x y]}]
-  (log "dot-index " x y offset)
   (let [[x y] (map - [x y] offset [12 12])]
     (let [ypos (reverse-board-position (int (/ y grid-unit-size)))
           xpos (int (/ x grid-unit-size))]

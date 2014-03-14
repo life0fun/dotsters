@@ -18,6 +18,7 @@
 
 
 ; ------------------- chan related ----------------------------
+; multi-wait on a list of chans, when event match pred, ret event.
 (defn select-chan [pred chans]
   (go-loop []
     (let [[value ch] (alts! chans)]
@@ -89,13 +90,12 @@
        ((set (butlast dot-chain)) (last dot-chain))))
 
 
-; multi-wait draw-ch to remove dots from dot-chain 
+; multi-wait draw-ch to find out which dots to be removed in dot-chain
 (defn get-dots-to-remove 
   [draw-ch start-state]
   (go-loop [last-state nil 
             state start-state]
     (render-dot-chain-update last-state state)
-    (log "get-dots-to-remove after render-dot-chain update ")
     (if (dot-chain-cycle? (state :dot-chain))
       (let [color (dot-color state (-> state :dot-chain first))]
         (log "get-dots-to-remove before flash-color-on ")
@@ -104,9 +104,9 @@
         (flash-color-off color)
         (erase-dot-chain)
         (assoc state :dot-chain (dot-positions-for-focused-color state) :exclude-color color))
+
+      ; blocking on draw-ch
       (let [[msg point] (<! draw-ch)]
-        (log "draw-ch return " msg point)
-        (log "draw-ch return " ((state :dot-index) point))
         (if (= msg :drawend)
           (do (erase-dot-chain) state)
           (recur state
@@ -141,7 +141,7 @@
       (let [state (add-missing-dots state)]
         (<! (timeout 300))
         (render-position-updates state)
-        (log "game loop block on get-dots-to-remove")
+        (log "game loop multi-wait on get-dots-to-remove")
         (let [[value ch] (alts! [(get-dots-to-remove draw-ch state) game-over-ch])]
           (if (= ch game-over-ch)
             state ;; leave game loop
@@ -165,8 +165,9 @@
       (loop []
         (let [{:keys [score]} (<! (game-loop (setup-game-state) draw-ch))]
           (render-screen (score-screen score)))
-        (<! (select-chan #(= [:start-new-game] %) [start-chan draw-ch]))       
-        (recur)))))
+          ; multi-wait on start-new-game from either start-chan(click start event) and draw-ch(mousemove event)
+          (<! (select-chan #(= [:start-new-game] %) [start-chan draw-ch]))       
+          (recur)))))
 
 
 (app-loop)
