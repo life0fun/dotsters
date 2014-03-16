@@ -11,6 +11,14 @@
   (:require-macros [cljs.core.async.macros :as m :refer [go go-loop alt!]]))
 
 
+;<div class="board">
+;   <div class="dot levelish red level-5" style="top:-112px; left: 23px;"></div>
+;   <div class="dot levelish yellow level-5" style="top:-112px; left: 23px;"></div>
+;   <div class="dot levelish blue level-4" style="top:-112px; left: 68px;"></div>
+;   <div class="dot levelish green level-0 level-0-from0" style="top:-112px; left: 248px;"></div>
+;
+;   <div class="dot levelish purple level-0 level-0-from0" style="top:-112px; left: 248px;"></div>
+
 (def abs #(.abs js/Math %))
 
 ; offscreen dot 
@@ -75,15 +83,36 @@
       [:div.dot-highlights]
       [:div.board]]])
 
-(defn create-board []
-  (vec (map-indexed
-         (fn [i x] (vec (map-indexed (partial create-dot i) (take board-size (rand-colors))))) 
-         (range board-size))))
+; board is vec of vec.
+; (def world (apply vector
+;   (map (fn [_] (apply vector (map (fn [_] (ref (struct cell 0 0))) (range dim))))
+;        (range dim))))
+(defn create-board [] 
+  (vec 
+    (map-indexed  ; create-dot at row i, within each row, different colors.
+      (fn [i x] (vec (map-indexed (partial create-dot i) (take board-size (rand-colors))))) 
+      (range board-size))))
 
 (defn render-view [state]
   (let [view-dom (crate/html (board state))]
       (inner ($ ".dots-game-container") view-dom)
       (mapv add-dots-to-board (state :board))))
+
+
+;called as ((partial dot-index board-offset) point)
+; map x,y co-ordinate into board matrix i,j
+(defn dot-index 
+  [offset {:keys [x y]}]  ; offset is board offset
+  (let [[x y] (map - [x y] offset [12 12])]  ; (x-offset-12, y-offset-12)
+    (let [ypos (reverse-board-position (int (/ y grid-unit-size)))
+          xpos (int (/ x grid-unit-size))]
+      (if (and (> board-size ypos -1) (> board-size xpos -1))
+        [xpos ypos]))))
+
+; board is vector of vector.
+; {:board [[{:color :blue :ele #<[objec]>}]]}
+(defn dot-color [{:keys [board]} dot-pos]
+  (-> board (get-in dot-pos) :color))  ; get-in for nested map, and vector
 
 
 ; ------------------ dot pos destruct to x, y -----------------------------
@@ -111,7 +140,9 @@
   (str "translate3d(0," (+ offscreen-offset top) "px,0) "))
 
 
-; dot is a div with x,y and color.
+; <div class="dot levelish yellow level-5" style="top:-112px; left: 23px;"></div>
+; <div class="dot levelish blue level-4" style="top:-112px; left: 68px;"></div>
+; <div class="dot levelish green level-0 level-0-from0" style="top:-112px; left: 248px;"></div>
 (defn starting-dot [[top-pos _] color]
   (let [[start-top left] (pos->corner-coord [top-pos offscreen-dot-position])
         style (str "top:" start-top "px; left: " left "px;")]
@@ -154,18 +185,6 @@
   (doseq [{:keys [elem]} dots]
     (append ($ ".dots-game .board") elem)))
 
-;called as ((partial dot-index board-offset) point)
-(defn dot-index 
-  [offset {:keys [x y]}]
-  (let [[x y] (map - [x y] offset [12 12])]
-    (let [ypos (reverse-board-position (int (/ y grid-unit-size)))
-          xpos (int (/ x grid-unit-size))]
-      (if (and (> board-size ypos -1) (> board-size xpos -1))
-        [xpos ypos]))))
-
-(defn dot-color [{:keys [board]} dot-pos]
-  (-> board (get-in dot-pos) :color))
-
 
 (defn dot-follows? [state prev-dot cur-dot]
   (and (not= prev-dot cur-dot)
@@ -173,7 +192,6 @@
            (and
             (= (dot-color state prev-dot) (dot-color state cur-dot))
             (= 1 (apply + (mapv (comp abs -) cur-dot prev-dot)))))))
-
 
 ; double line in background in style when dots chained
 (defn chain-element-templ 
@@ -240,7 +258,6 @@
 (defn items-with-positions [items]
   (apply concat
          (map-indexed #(map-indexed (fn [i item] (assoc item :pos [%1 i])) %2) items)))
-
 
 (defn get-all-color-dots 
   [state color]
