@@ -33,8 +33,9 @@
 ;       if (= :draw msg)
 ;         (recur (<! chan))  
 ;   (recur (<! chan))
-
-; game-loop alts! draw-chan and timeout-chan
+;
+; game-loop on each draw gester. alts! draw-chan and timeout-chan; 
+; get dots to remove from draw-chan ends and dots in :dot-chain in state map.
 ;   go-loop [state init-state]
 ;     [value ch] (alts! [(get-dots-to-remove draw-chan state) timeout-chan])
 ;     (recur (-> state (render-remove-dots dot-chain) (assoc :score x)))
@@ -51,7 +52,7 @@
         (recur)))))
 
 
-; ret a chan wraps click event handler of specified selector.
+; click chan contains click evt put in by click event handler on the selector.
 (defn click-chan [selector msg-name]
   (let [out-chan (chan)
         handler (fn [e] (jq/prevent e) (put! out-chan [msg-name]))]
@@ -59,25 +60,25 @@
     (on ($ "body") "touchend" selector {} handler)
     out-chan))
 
-; a chan wraps selector's mouse move hdl, msg [msg-name {:x :y}]
+; Evt hdl injects mouse move evt to out-chan. [msg-name {:x :y}]
 (defn mouseevent-chan [out-chan selector event msg-name]
   (bind ($ selector) event
         #(do
           (put! out-chan [msg-name {:x (.-pageX %) :y (.-pageY %)}]))))
 
-; a chan wraps selector's touch event msg [msg-name {:x :y}]
+; Evt hdl injects touch move evt to out-chan. [msg-name {:x :y}]
 (defn touchevent-chan [out-chan selector event msg-name]
   (bind ($ selector) event
         #(let [touch (aget (.-touches (.-originalEvent %)) 0)]
           (put! out-chan [msg-name {:x (.-pageX touch) :y (.-pageY touch)}]))))
 
 
-; div's mousedown evt hdl emits :drawstart msg into passed-in chan
+; div's mousedown evt hdl emits :drawstart msg into the passed-in chan
 (defn drawstart-chan [ichan selector]
   (mouseevent-chan ichan selector "mousedown" :drawstart)
   (touchevent-chan ichan selector "touchstart" :drawstart))
 
-; div's mouseup evt hdl emits :drawend msg into passed-in chan
+; div's mouseup evt hdl emits :drawend msg into the passed-in chan
 (defn drawend-chan [ichan selector]
   (mouseevent-chan ichan selector "mouseup" :drawend)
   (mouseevent-chan ichan selector "touchend" :drawend))
@@ -87,7 +88,7 @@
   (mouseevent-chan ichan selector "mousemove" :draw)
   (touchevent-chan ichan selector "touchmove" :draw))
 
-; go-loop read :draw msg and put to out-chan, recursively only when msg is :draw
+; inner go-loop read :draw msg and put them into out-chan, recur only when :draw
 (defn get-drawing [draw-ichan draw-ochan]
   (go-loop [msg (<! draw-ichan)]
     (put! draw-ochan msg)
@@ -118,9 +119,10 @@
   (and (< 3 (count dot-chain))
        ((set (butlast dot-chain)) (last dot-chain))))
 
-; goloop read draw-chan, which contains [:draw-start :draw :draw-end] one by one.
+; goloop draw-chan, where [:draw-start :draw :draw-end], read msg one by one.
 ; map :draw x,y to dots with board dots index pos, and store dots to state map :dot-chain.
-(defn get-dots-to-remove 
+; when this ret, one draw gesture done, draw-chan :drawend, and all draw dots in :dot-chain in state map.
+(defn get-dots-to-remove   ; ret state map that contains :dot-chain
   [draw-chan start-state]
   (go-loop [last-state nil 
             state start-state]
@@ -128,7 +130,7 @@
     (if (dot-chain-cycle? (state :dot-chain))
       (let [color (dot-color state (-> state :dot-chain first))] ; color of first dot in dot-chain
         (flash-color-on color) ; add flash class to .board-area
-        ; blocking wait until draw end evt from draw-chan, then remove all dots in :dot-chain
+        ; blocking wait until :drawend from draw-chan, then conj to :dot-chain
         (<! (multi-wait-until (fn [[msg _]] (= msg :drawend)) [draw-chan]))
         (flash-color-off color)
         (erase-dot-chain)  ; just reset (inner ($ ".dots-game .dot-highlights") ""))
@@ -140,7 +142,7 @@
         ; (log "get-dots-to-remove after read draw-chan " msg point)
         (if (= msg :drawend)
           (do (erase-dot-chain) state)  ; reset .dot-highlights ""
-          (recur state   ; last state is cur state
+          (recur state   ; recur read :draw msg from draw-chan and conj to :dot-chain in state map.
                  (if-let [dot-pos ((state :dot-index) point)]
                     (assoc state :dot-chain (transition-dot-chain-state state dot-pos))
                     state)))))))
@@ -156,16 +158,18 @@
       (recur (timeout 1000) (dec count-down)))))
 
 
-; goloop recur process :draw msg from draw-chan, ret score when game over.
+; game loop on each draw gesture. when gesture done, draw dots in draw-chan stored in
+; state map :dot-chain. remove those dots, and recur by add missing dots.
 (defn game-loop [init-state draw-chan]
-  (let [game-over-timeout (game-timer 60)]
+  (let [game-over-timeout (game-timer 600)]
+    ; go-loop on state, state changes on each draw gesture.
     (go-loop [state init-state]
       (render-score state)
       (render-position-updates state)
       (let [state (add-missing-dots state)]
         (<! (timeout 300))
         (render-position-updates state)
-        ; wait for the reading of draw-chan ret dots in state map :dot-chain
+        ; wait for the reading of draw-chan ret drawing dots in state map :dot-chain
         (let [[state ch] (alts! [(get-dots-to-remove draw-chan state) game-over-timeout])]
           (if (= ch game-over-timeout)
             state ;; leave game loop
