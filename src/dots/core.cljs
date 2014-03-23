@@ -161,27 +161,28 @@
 ; game loop on each draw gesture. when gesture done, draw dots in draw-chan stored in
 ; state map :dot-chain. remove those dots, and recur by add missing dots.
 (defn game-loop [init-state draw-chan]
-  (let [game-over-timeout (game-timer 600)]
+  (let [game-over-timeout (game-timer 602)]
     ; go-loop on state, state changes on each draw gesture.
-    (go-loop [state init-state]
-      (render-score state)
-      (render-position-updates state)
-      (let [state (add-missing-dots state)]
+    (go-loop [app-state init-state]
+      (render-score app-state)
+      (render-position-updates app-state)
+      (let [app-state (add-missing-dots app-state)]
         (<! (timeout 300))
-        (render-position-updates state)
+        (render-position-updates app-state)
         ; wait for the reading of draw-chan ret drawing dots in state map :dot-chain
-        (let [[state ch] (alts! [(get-dots-to-remove draw-chan state) game-over-timeout])]
+        ; get-dots-to-remove ret the current game state, it has :dot-chan [] 
+        (let [[draw-state ch] (alts! [(get-dots-to-remove draw-chan app-state) game-over-timeout])]
           (if (= ch game-over-timeout)
-            state ;; leave game loop
+            app-state ;; leave game loop
             (recur  ; dots in draw-chan get maps to vec pos index and store in :dot-chain in state map
-              (let [{:keys [dot-chain exclude-color]} state]  
+              (let [{:keys [dot-chain exclude-color]} draw-state]
                 (log "game loop recur " dot-chain)  ; dot-chain = [[0 4] [1 4]]
                 (if (< 1 (count dot-chain))
-                  (-> state
+                  (-> app-state
                       (render-remove-dots dot-chain)
-                      (assoc :score (+ (state :score) (count (set dot-chain)))
+                      (assoc :score (+ (app-state :score) (count (set dot-chain)))
                              :exclude-color exclude-color))
-                  state)
+                  app-state)
                 ))))))))
 
 ;

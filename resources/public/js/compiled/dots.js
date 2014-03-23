@@ -22519,8 +22519,8 @@ dots.board.remove_dot = function(a) {
         if (1 === c) {
           var c = jayq.core.$.call(null, b), d = dots.board.top_pos_from_dot_elem.call(null, c), d = dots.board.reverse_board_position.call(null, d), e = dots.board.pos__GT_coord.call(null, d), m = dots.board.translate_top.call(null, e), d = cljs.core.PersistentHashMap.fromArrays.call(null, ["-webkit-transition"], ["all 0.2s"]), d = jayq.core.css.call(null, c, d), m = [cljs.core.str(m), cljs.core.str(" scale3d(0.1,0.1,0.1)")].join(""), l = dots.board.offscreen_offset + e, l = [cljs.core.str("translate(0,"), 
           cljs.core.str(l), cljs.core.str("px) scale(0.1,0.1)")].join(""), e = dots.board.offscreen_offset + e, e = [cljs.core.str("translate(0,"), cljs.core.str(e), cljs.core.str("px) scale(0.1,0.1)")].join(""), e = cljs.core.PersistentHashMap.fromArrays.call(null, ["-webkit-transform", "-moz-transform", "-ms-transform"], [m, l, e]), c = jayq.core.css.call(null, c, e), e = cljs.core.async.timeout.call(null, 150);
-          a[8] = d;
-          a[9] = c;
+          a[8] = c;
+          a[9] = d;
           return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null, a, 2, e);
         }
         return null;
@@ -22589,8 +22589,8 @@ dots.board.update_dot = function(a, b) {
             var d = c[7], e = c[2], k = cljs.core.last.call(null, b), k = dots.board.reverse_board_position.call(null, k), e = [cljs.core.str("level-"), cljs.core.str(k), cljs.core.str(e)].join(""), d = d.addClass(e);
             return cljs.core.async.impl.ioc_helpers.return_chan.call(null, c, d);
           }
-          return 3 === d ? (c[2] = "", c[1] = 4, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 2 === d ? (d = dots.board.reverse_board_position.call(null, c[8]), d = [cljs.core.str("-from"), cljs.core.str(d)].join(""), c[2] = d, c[1] = 4, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 1 === d ? (d = a.call(null, new cljs.core.Keyword(null, "elem", "elem", 1017020161)), e = jayq.core.$.call(null, d), d = dots.board.top_pos_from_dot_elem.call(null, e), c[7] = e, c[8] = 
-          d, cljs.core.truth_(d) ? c[1] = 2 : c[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
+          return 3 === d ? (c[2] = "", c[1] = 4, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 2 === d ? (d = dots.board.reverse_board_position.call(null, c[8]), d = [cljs.core.str("-from"), cljs.core.str(d)].join(""), c[2] = d, c[1] = 4, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 1 === d ? (d = a.call(null, new cljs.core.Keyword(null, "elem", "elem", 1017020161)), e = jayq.core.$.call(null, d), d = dots.board.top_pos_from_dot_elem.call(null, e), c[8] = d, c[7] = 
+          e, cljs.core.truth_(d) ? c[1] = 2 : c[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
         });
       }(), e = function() {
         var a = d.call(null);
@@ -22776,18 +22776,18 @@ dots.board.render_position_updates_helper = function(a, b) {
       }(function(c) {
         var d = c[1];
         if (1 === d) {
-          var d = cljs.core.nth.call(null, b, 0, null), e = cljs.core.nthnext.call(null, b, 1), k = b;
+          var e = cljs.core.nth.call(null, b, 0, null), k = cljs.core.nthnext.call(null, b, 1), d = b;
           c[7] = 0;
-          c[8] = k;
-          c[9] = d;
-          c[10] = e;
+          c[8] = d;
+          c[9] = e;
+          c[10] = k;
           c[2] = null;
           c[1] = 2;
           return new cljs.core.Keyword(null, "recur", "recur", 1122293407);
         }
-        return 2 === d ? (k = c[8], d = c[11], e = cljs.core.nth.call(null, k, 0, null), d = cljs.core.nthnext.call(null, k, 1), k = cljs.core.not.call(null, null == e), c[12] = d, c[11] = e, c[1] = k ? 4 : 5, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 3 === d ? (d = c[2], cljs.core.async.impl.ioc_helpers.return_chan.call(null, c, d)) : 4 === d ? (k = c[7], d = c[11], k = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [a, k], null), d = !dots.board.at_correct_postion_QMARK_.call(null, 
-        d, k), c[1] = d ? 7 : 8, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 5 === d ? (c[2] = null, c[1] = 6, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 6 === d ? (d = c[2], c[2] = d, c[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 7 === d ? (d = cljs.core.async.timeout.call(null, 80), cljs.core.async.impl.ioc_helpers.take_BANG_.call(null, c, 10, d)) : 8 === d ? (c[2] = null, c[1] = 9, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 
-        9 === d ? (k = c[7], d = c[12], e = c[2], c[13] = e, c[7] = k + 1, c[8] = d, c[2] = null, c[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 10 === d ? (k = c[7], d = c[11], e = c[2], k = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [a, k], null), d = dots.board.update_dot.call(null, d, k), c[14] = e, c[2] = d, c[1] = 9, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
+        return 2 === d ? (e = c[11], d = c[8], k = cljs.core.nth.call(null, d, 0, null), e = cljs.core.nthnext.call(null, d, 1), d = cljs.core.not.call(null, null == k), c[11] = k, c[12] = e, c[1] = d ? 4 : 5, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 3 === d ? (d = c[2], cljs.core.async.impl.ioc_helpers.return_chan.call(null, c, d)) : 4 === d ? (e = c[11], d = c[7], d = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [a, d], null), d = !dots.board.at_correct_postion_QMARK_.call(null, 
+        e, d), c[1] = d ? 7 : 8, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 5 === d ? (c[2] = null, c[1] = 6, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 6 === d ? (d = c[2], c[2] = d, c[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 7 === d ? (d = cljs.core.async.timeout.call(null, 80), cljs.core.async.impl.ioc_helpers.take_BANG_.call(null, c, 10, d)) : 8 === d ? (c[2] = null, c[1] = 9, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 
+        9 === d ? (e = c[12], d = c[7], k = c[2], c[13] = k, c[7] = d + 1, c[8] = e, c[2] = null, c[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 10 === d ? (e = c[11], d = c[7], k = c[2], d = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [a, d], null), d = dots.board.update_dot.call(null, e, d), c[14] = k, c[2] = d, c[1] = 9, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
       });
     }(), e = function() {
       var a = d.call(null);
@@ -23067,9 +23067,9 @@ dots.core.draw_chan = function(a) {
         }
         if (2 === d) {
           var d = a[2], e = cljs.core.nth.call(null, d, 0, null), f = cljs.core.nth.call(null, d, 1, null);
-          a[11] = f;
+          a[11] = e;
+          a[12] = f;
           a[7] = d;
-          a[12] = e;
           a[2] = null;
           a[1] = 3;
           return new cljs.core.Keyword(null, "recur", "recur", 1122293407);
@@ -23096,7 +23096,7 @@ dots.core.get_dots_to_remove = function(a, b) {
       return function(a) {
         return function() {
           var b = null, c = function() {
-            var a = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+            var a = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
             a[0] = b;
             a[1] = 1;
             return a;
@@ -23157,18 +23157,17 @@ dots.core.get_dots_to_remove = function(a, b) {
           return m = c[2], cljs.core.async.impl.ioc_helpers.return_chan.call(null, c, m);
         }
         if (4 === d) {
-          var k = c[7], e = c[8], n = c[10], q = (new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351)).cljs$core$IFn$_invoke$arity$1(k), r = cljs.core.first.call(null, q), s = dots.board.dot_color.call(null, k, r), p = jayq.util.log.call(null, "get-dots-to-remove before flash-color-on "), t = dots.board.flash_color_on.call(null, s), m = function() {
-            return function(a, b, c, d, e, f, g, h, k, l, m, n) {
+          var k = c[7], e = c[8], n = c[10], q = (new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351)).cljs$core$IFn$_invoke$arity$1(k), r = cljs.core.first.call(null, q), s = dots.board.dot_color.call(null, k, r), p = dots.board.flash_color_on.call(null, s), m = function() {
+            return function(a, b, c, d, e, f, g, h, k, l, m) {
               return function(a) {
                 var b = cljs.core.nth.call(null, a, 0, null);
                 cljs.core.nth.call(null, a, 1, null);
                 return cljs.core._EQ_.call(null, b, new cljs.core.Keyword(null, "drawend", "drawend", 2926909577));
               };
-            }(s, e, k, k, e, n, q, r, s, p, t, d);
+            }(s, e, k, k, e, n, q, r, s, p, d);
           }(), l = new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [a], null), m = dots.core.multi_wait_until.call(null, m, l);
-          c[11] = p;
-          c[12] = t;
           c[10] = s;
+          c[11] = p;
           return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null, c, 7, m);
         }
         if (5 === d) {
@@ -23178,17 +23177,17 @@ dots.core.get_dots_to_remove = function(a, b) {
           return m = c[2], c[2] = m, c[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407);
         }
         if (7 === d) {
-          var k = c[7], n = c[10], m = c[2], l = dots.board.flash_color_off.call(null, n), u = dots.board.erase_dot_chain.call(null), v = dots.board.dot_positions_for_focused_color.call(null, k), v = cljs.core.assoc.call(null, k, new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351), v, new cljs.core.Keyword(null, "exclude-color", "exclude-color", 4787128610), n);
-          c[13] = m;
-          c[14] = u;
-          c[15] = l;
-          c[2] = v;
+          var k = c[7], n = c[10], m = c[2], l = dots.board.flash_color_off.call(null, n), t = dots.board.erase_dot_chain.call(null), u = dots.board.dot_positions_for_focused_color.call(null, k), u = cljs.core.assoc.call(null, k, new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351), u, new cljs.core.Keyword(null, "exclude-color", "exclude-color", 4787128610), n);
+          c[12] = l;
+          c[13] = t;
+          c[14] = m;
+          c[2] = u;
           c[1] = 6;
           return new cljs.core.Keyword(null, "recur", "recur", 1122293407);
         }
-        return 8 === d ? (m = c[16], l = c[2], m = cljs.core.nth.call(null, l, 0, null), l = cljs.core.nth.call(null, l, 1, null), u = jayq.util.log.call(null, "get-dots-to-remove after read draw-chan ", m, l), m = cljs.core._EQ_.call(null, m, new cljs.core.Keyword(null, "drawend", "drawend", 2926909577)), c[17] = u, c[16] = l, c[1] = m ? 9 : 10, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 9 === d ? (k = c[7], m = dots.board.erase_dot_chain.call(null), c[18] = m, c[2] = k, c[1] = 
-        11, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 10 === d ? (m = c[16], k = c[7], l = c[19], m = k.call(null, new cljs.core.Keyword(null, "dot-index", "dot-index", 2095372992)).call(null, m), c[19] = m, cljs.core.truth_(m) ? c[1] = 12 : c[1] = 13, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 11 === d ? (m = c[2], c[2] = m, c[1] = 6, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 12 === d ? (k = c[7], l = c[19], m = dots.board.transition_dot_chain_state.call(null, 
-        k, l), m = cljs.core.assoc.call(null, k, new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351), m), c[2] = m, c[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 13 === d ? (k = c[7], c[2] = k, c[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 14 === d ? (k = c[7], m = c[2], e = k, c[7] = m, c[8] = e, c[2] = null, c[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
+        return 8 === d ? (m = c[2], l = cljs.core.nth.call(null, m, 0, null), m = cljs.core.nth.call(null, m, 1, null), l = cljs.core._EQ_.call(null, l, new cljs.core.Keyword(null, "drawend", "drawend", 2926909577)), c[15] = m, c[1] = l ? 9 : 10, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 9 === d ? (k = c[7], m = dots.board.erase_dot_chain.call(null), c[16] = m, c[2] = k, c[1] = 11, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 10 === d ? (k = c[7], m = c[15], l = 
+        c[17], m = k.call(null, new cljs.core.Keyword(null, "dot-index", "dot-index", 2095372992)).call(null, m), c[17] = m, cljs.core.truth_(m) ? c[1] = 12 : c[1] = 13, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 11 === d ? (m = c[2], c[2] = m, c[1] = 6, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 12 === d ? (k = c[7], l = c[17], m = dots.board.transition_dot_chain_state.call(null, k, l), m = cljs.core.assoc.call(null, k, new cljs.core.Keyword(null, "dot-chain", 
+        "dot-chain", 2089650351), m), c[2] = m, c[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 13 === d ? (k = c[7], c[2] = k, c[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 14 === d ? (k = c[7], m = c[2], e = k, c[7] = m, c[8] = e, c[2] = null, c[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
       });
     }(), e = function() {
       var a = d.call(null);
@@ -23254,8 +23253,8 @@ dots.core.game_timer = function(a) {
         }
         if (6 === c) {
           var c = b[7], d = cljs.core.async.timeout.call(null, 1E3);
-          b[7] = c - 1;
           b[8] = d;
+          b[7] = c - 1;
           b[2] = null;
           b[1] = 2;
           return new cljs.core.Keyword(null, "recur", "recur", 1122293407);
@@ -23270,11 +23269,11 @@ dots.core.game_timer = function(a) {
           return c = b[2], cljs.core.async.impl.ioc_helpers.return_chan.call(null, b, c);
         }
         if (2 === c) {
-          var c = b[7], d = b[8], h = jayq.core.$.call(null, ".time-val"), c = jayq.core.inner.call(null, h, c);
+          var d = b[8], c = b[7], h = jayq.core.$.call(null, ".time-val"), c = jayq.core.inner.call(null, h, c);
           b[10] = c;
           return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null, b, 4, d);
         }
-        return 1 === c ? (d = cljs.core.async.timeout.call(null, 1E3), c = a, b[7] = c, b[8] = d, b[2] = null, b[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
+        return 1 === c ? (d = cljs.core.async.timeout.call(null, 1E3), c = a, b[8] = d, b[7] = c, b[2] = null, b[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
       });
     }(), d = function() {
       var a = c.call(null);
@@ -23286,13 +23285,13 @@ dots.core.game_timer = function(a) {
   return b;
 };
 dots.core.game_loop = function(a, b) {
-  var c = dots.core.game_timer.call(null, 60), d = cljs.core.async.chan.call(null, 1);
+  var c = dots.core.game_timer.call(null, 601), d = cljs.core.async.chan.call(null, 1);
   cljs.core.async.impl.dispatch.run.call(null, function() {
     var e = function() {
       return function(a) {
         return function() {
           var b = null, c = function() {
-            var a = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+            var a = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
             a[0] = b;
             a[1] = 1;
             return a;
@@ -23336,21 +23335,24 @@ dots.core.game_loop = function(a, b) {
       }(function(d) {
         var e = d[1];
         if (1 === e) {
-          return e = a, d[7] = e, d[2] = null, d[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407);
+          var f = a;
+          d[7] = f;
+          d[2] = null;
+          d[1] = 2;
+          return new cljs.core.Keyword(null, "recur", "recur", 1122293407);
         }
         if (2 === e) {
-          var e = d[7], f = dots.board.render_score.call(null, e), m = dots.board.render_position_updates.call(null, e), e = dots.board.add_missing_dots.call(null, e), l = cljs.core.async.timeout.call(null, 300);
-          d[8] = e;
-          d[9] = f;
+          var f = d[7], e = dots.board.render_score.call(null, f), m = dots.board.render_position_updates.call(null, f), f = dots.board.add_missing_dots.call(null, f), l = cljs.core.async.timeout.call(null, 300);
+          d[8] = f;
+          d[9] = e;
           d[10] = m;
           return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null, d, 4, l);
         }
-        return 3 === e ? (e = d[2], cljs.core.async.impl.ioc_helpers.return_chan.call(null, d, e)) : 4 === e ? (e = d[8], f = d[2], m = dots.board.render_position_updates.call(null, e), l = jayq.util.log.call(null, "game loop multi-wait on get-dots-to-remove from draw-chan"), e = [dots.core.get_dots_to_remove.call(null, b, e), c], e = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, e, null), d[11] = l, d[12] = m, d[13] = f, cljs.core.async.impl.ioc_helpers.ioc_alts_BANG_.call(null, 
-        d, 5, e)) : 5 === e ? (f = d[2], e = cljs.core.nth.call(null, f, 0, null), f = cljs.core.nth.call(null, f, 1, null), f = cljs.core._EQ_.call(null, f, c), d[14] = e, d[1] = f ? 6 : 7, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 6 === e ? (e = d[8], d[2] = e, d[1] = 8, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 7 === e ? (e = d[14], e = cljs.core.seq_QMARK_.call(null, e), d[1] = e ? 9 : 10, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 8 === 
-        e ? (e = d[2], d[2] = e, d[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 9 === e ? (e = d[14], e = cljs.core.apply.call(null, cljs.core.hash_map, e), d[2] = e, d[1] = 11, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 10 === e ? (e = d[14], d[2] = e, d[1] = 11, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 11 === e ? (l = d[15], e = d[2], f = cljs.core.get.call(null, e, new cljs.core.Keyword(null, "exclude-color", "exclude-color", 4787128610)), 
-        m = cljs.core.get.call(null, e, new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351)), l = jayq.util.log.call(null, "game loop recur ", m), e = 1 < cljs.core.count.call(null, m), d[16] = l, d[15] = m, d[17] = f, cljs.core.truth_(e) ? d[1] = 12 : d[1] = 13, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 12 === e ? (e = d[8], l = d[15], f = d[17], m = dots.board.render_remove_dots.call(null, e, l), e = e.call(null, new cljs.core.Keyword(null, "score", "score", 1123168772)), 
-        l = cljs.core.set.call(null, l), l = cljs.core.count.call(null, l), e += l, e = cljs.core.assoc.call(null, m, new cljs.core.Keyword(null, "score", "score", 1123168772), e, new cljs.core.Keyword(null, "exclude-color", "exclude-color", 4787128610), f), d[2] = e, d[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 13 === e ? (e = d[8], d[2] = e, d[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 14 === e ? (e = d[2], d[7] = e, d[2] = null, d[1] = 2, new cljs.core.Keyword(null, 
-        "recur", "recur", 1122293407)) : null;
+        return 3 === e ? (e = d[2], cljs.core.async.impl.ioc_helpers.return_chan.call(null, d, e)) : 4 === e ? (f = d[8], e = d[2], m = dots.board.render_position_updates.call(null, f), f = [dots.core.get_dots_to_remove.call(null, b, f), c], f = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, f, null), d[11] = e, d[12] = m, cljs.core.async.impl.ioc_helpers.ioc_alts_BANG_.call(null, d, 5, f)) : 5 === e ? (f = d[2], e = cljs.core.nth.call(null, f, 0, null), f = cljs.core.nth.call(null, 
+        f, 1, null), f = cljs.core._EQ_.call(null, f, c), d[13] = e, d[1] = f ? 6 : 7, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 6 === e ? (f = d[8], d[2] = f, d[1] = 8, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 7 === e ? (e = d[13], e = cljs.core.seq_QMARK_.call(null, e), d[1] = e ? 9 : 10, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 8 === e ? (e = d[2], d[2] = e, d[1] = 3, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 9 === e ? 
+        (e = d[13], e = cljs.core.apply.call(null, cljs.core.hash_map, e), d[2] = e, d[1] = 11, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 10 === e ? (e = d[13], d[2] = e, d[1] = 11, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 11 === e ? (l = d[14], f = d[2], e = cljs.core.get.call(null, f, new cljs.core.Keyword(null, "exclude-color", "exclude-color", 4787128610)), m = cljs.core.get.call(null, f, new cljs.core.Keyword(null, "dot-chain", "dot-chain", 2089650351)), 
+        l = jayq.util.log.call(null, "game loop recur ", m), f = 1 < cljs.core.count.call(null, m), d[15] = e, d[16] = l, d[14] = m, cljs.core.truth_(f) ? d[1] = 12 : d[1] = 13, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 12 === e ? (e = d[15], f = d[8], l = d[14], m = dots.board.render_remove_dots.call(null, f, l), f = f.call(null, new cljs.core.Keyword(null, "score", "score", 1123168772)), l = cljs.core.set.call(null, l), l = cljs.core.count.call(null, l), f += l, e = cljs.core.assoc.call(null, 
+        m, new cljs.core.Keyword(null, "score", "score", 1123168772), f, new cljs.core.Keyword(null, "exclude-color", "exclude-color", 4787128610), e), d[2] = e, d[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 13 === e ? (f = d[8], d[2] = f, d[1] = 14, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : 14 === e ? (f = d[2], d[7] = f, d[2] = null, d[1] = 2, new cljs.core.Keyword(null, "recur", "recur", 1122293407)) : null;
       });
     }(), f = function() {
       var a = e.call(null);
