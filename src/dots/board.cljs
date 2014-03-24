@@ -50,16 +50,19 @@
     ;(log "rand-colors " (prn-str colors))
     (map #(get colors (rand-int %)) (repeat number-colors))))
 
+
+; just attach the screen div to div.dots-game-container
+(defn render-screen [screen]
+  (let [view-dom (crate/html screen)]
+    (inner ($ ".dots-game-container") view-dom)))
+
+
 (defn start-screen []
   [:div.dots-game
     [:div.notice-square
       [:div.marq (colorize-word "SHAPES")]
       [:div.control-area
         [:a.start-new-game {:href "#"} "new game"]]]])
-
-(defn render-screen [screen]
-  (let [view-dom (crate/html screen)]
-    (inner ($ ".dots-game-container") view-dom)))
 
 (defn score-screen [score]
   [:div.dots-game
